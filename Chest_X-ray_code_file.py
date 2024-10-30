@@ -54,49 +54,8 @@ print('Total images :', Total_images)
 print('Pneumonia images :', Total_pneumonia)
 print('Normal images :', Total_normal)
 
+
 # Define the desired number of images for each class
-desired_num_images = 1000
-
-#Combine the train/val/test set of for each class
-pneumonia = train_pn + test_pn + val_pn
-normal = train_nn + test_nn + val_nn
-
-# Shuffle the pneumonia and normal image lists
-random.shuffle(pneumonia)
-random.shuffle(normal)
-
-# Undersample the dataset to the desired number of images for each class
-pneumonia_undersampled = pneumonia[:desired_num_images]
-normal_undersampled = normal[:desired_num_images]
-
-# Update the total number of images and pneumonia/normal counts
-Total_images_undersampled = len(pneumonia_undersampled + normal_undersampled)
-Total_pneumonia_undersampled = len(pneumonia_undersampled)
-Total_normal_undersampled = len(normal_undersampled)
-
-print("After undersampling:\n")
-print(f"{'Total:':<30} {Total_images_undersampled}")
-print(f"{'Pneumonia:':<30} {Total_pneumonia_undersampled}")
-print(f"{'Normal:':<30} {Total_normal_undersampled}")
-
-#Combine and split the data set according to desire ratio [Train:Val:Test - 80:10:10]
-train_set = pneumonia_undersampled[:240]+ normal_undersampled[:240]
-test_set = pneumonia_undersampled[240:270]+ normal_undersampled[240:270]
-val_set = pneumonia_undersampled[270:] + normal_undersampled[270:]
-
-random.shuffle(train_set)
-random.shuffle(test_set)
-random.shuffle(val_set)
-
-print("Total Train Images %s containing %s pneumonia and %s normal images"
-      % (len(train_set),len(pneumonia_undersampled[:240]),len(normal_undersampled[:240])))
-print("Total Test Images %s containing %s pneumonia and %s normal images"
-      % (len(test_set),len(pneumonia_undersampled[240:270]),len(normal_undersampled[240:270])))
-print("Total validation Images %s containing %s pneumonia and %s normal images"
-      % (len(val_set),len(pneumonia_undersampled[270:]),len(normal_undersampled[270:])))
-
-import random
-
 desired_num_images = 1000
 
 # Combine the train/val/test set for each class
@@ -154,9 +113,6 @@ print('The pixel size of the 1st image in train set is', f"Width: {train_width} 
 print('The pixel size of the 1st image in test set is', f"Width: {test_width} pixels", 'and', f"Height: {test_height} pixels")
 print('The pixel size of the 1st image in val set is', f"Width: {val_width} pixels", 'and', f"Height: {val_height} pixels")
 
-import cv2
-import os
-import numpy as np
 
 # Preprocess the data so it can fit into VGG-16
 def preprocess_image_VGG16(image_list, new_size=(224, 224)):
